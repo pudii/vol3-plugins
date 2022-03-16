@@ -1,4 +1,19 @@
-from asyncio import format_helpers
+# Copyright (C) 2022
+#     Authors: Pudii (2022), Csaba Barta (2015)
+#  
+#     This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from volatility3.framework import interfaces, contexts, automagic, plugins, renderers, interfaces, exceptions, constants
 from volatility3.framework.configuration import requirements
 from volatility3.framework.renderers import format_hints
@@ -11,7 +26,7 @@ class Processbl(interfaces.plugins.PluginInterface):
     _version = (1, 0, 0)
 
     '''
-    Scans memory for processes and loaded DLLs and compares the results with the baseline
+    Scans memory for processes and loaded DLLs and compares the results with a provided baseline
     '''
     
     baseline_proc_list = {}
@@ -326,7 +341,6 @@ class Processbl(interfaces.plugins.PluginInterface):
                     if self.config.get("onlyknown") and p_found:
                         yield(0, [format_hints.Hex(proc['offset']), proc['image'], proc['path'], proc['pid'], proc['ppid'], p_found])
 
-                    
             else: 
                 # The process is not found.
                 if self.config.get("verbose"):
